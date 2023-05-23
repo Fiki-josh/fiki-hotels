@@ -1,0 +1,19 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content%}
+  <!-- chat/send_message.html -->
+  <div style=" width: 80%; padding-left: 3px ;">
+    <center>
+      <h1>Compose Message</h1>
+    </center>
+    <form method="post">
+      {% csrf_token %}
+      <label for="receiver">To:</label>
+      <input type="text" name="receiver" id="receiver"><br> <br>
+      <label for="content">Message:</label>
+      <textarea name="content" id="content" style="width: 60%; height: 350px;"></textarea><br>
+      <input type="submit" value="Send" class="btn btn-primary">
+    </form>
+  </div>
+{%endblock%}
+

@@ -1,0 +1,17 @@
+{% extends 'guest_pages/base_guest.html' %}
+
+{% block content%}
+  <!-- chat/send_message.html -->
+  <div style=" width: 100%; padding-left: 3px ;">
+    <center>
+      <h1>Message Admin</h1>
+    </center>
+    <form method="post" style="padding-left: 10px;">
+      {% csrf_token %}
+      <br>
+      <label for="content">Message:</label>
+      <textarea name="content" id="content" style="width: 90%; height: 350px;"></textarea><br>
+      <input type="submit" value="Send" class="btn btn-primary">
+    </form>
+  </div>
+{%endblock%}

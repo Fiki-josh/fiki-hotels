@@ -1,0 +1,11 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content%}
+<form method="post" enctype="multipart/form-data" style="margin-left: 40px;">
+    {% csrf_token %}
+    {{form.as_p}}
+    
+    {{ form.image_field }}
+    <button type="submit" class="btn btn-primary">Update Room</button>
+</form>
+{% endblock %}

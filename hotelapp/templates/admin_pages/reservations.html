@@ -1,0 +1,70 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content %}
+<div id="topnavbar">
+    <div class="topnav mb-3">
+        <div class="d-flex px-1"><a href="#news" class="active">All Reservation</a>
+        </div>
+        <button class="btn btn-primary" style="float: right;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Reservation</button>
+        <div class="d-flex align-items-center mb-3 px-md-3 px-2"> <span class="text-uppercase fs13 fw-bolder pe-3">search<span class="ps-1">by</span></span>
+            <form class="example d-flex align-items-center"> <input type="text" placeholder="Type in user name" name="search"> <button type="submit"><i class="fa fa-search"></i></button> </form>
+        </div>
+      <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Reservation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" class="form">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="save" onclick="preventRedo">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive px-2">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">USER ID</span></th>
+                    <th scope="col">USER NAME</span></th>
+                    <th scope="col">ROOM </th>
+                    <th scope="col">START DATE</th>
+                    <th scope="col">END DATE</th>
+        
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserve in reserved%}
+                <tr>
+                    <td><span class="bg-blight">{{reserve.id}}</span></td>
+                    <td><span class="bg-bdark">{{reserve.username}}</td>
+                    <td><span class="bg-blight">{{reserve.room}}</span></td>
+                    <td><span class="bg-bdark">{{reserve.start_date}}</span></td>
+                    <td class=" px-0">{{reserve.end_date}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between px-3 mt-3">
+        <div class="bg-bdark fs13"> <span>Page</span> <input class="input-10 text-center" type="text" value="1"> <span><span class="px-1">of</span>1</span> </div>
+        <div class="d-flex justify-content-end bg-bdark fs13"> <span class="pe-1">Show</span> <input class="input-10" type="number" value="25"> <span class="ps-2"><span class="pe-2">/</span>Page</span> </div>
+    </div>
+</div>
+
+<script>
+    var save = document.getElementById("save");
+    function preventRedo(event){
+        event.preventDefault();
+    }
+</script>
+{% endblock %}

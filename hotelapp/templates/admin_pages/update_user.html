@@ -1,0 +1,10 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content%}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    
+    <button type="submit" class="btn btn-primary">Update User</button>
+</form>
+{% endblock %}

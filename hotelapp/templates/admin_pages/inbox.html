@@ -1,0 +1,25 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content%}
+  <div style=" width: 80%; padding-left: 3px ;">
+    <center>
+      <h1>Inbox</h1>
+    </center>
+    <div class="card" style="width: inherit; margin: 0 auto;">
+
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>
+              <strong>From:</strong> {{ message.sender }} <br>
+              <strong> -Subject:</strong> {{ message.content|truncatewords:5 }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You have no messages.</p>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

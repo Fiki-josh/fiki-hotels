@@ -1,0 +1,36 @@
+{% extends 'guest_pages/base_guest.html' %}
+
+{% block content %}
+<div class="container">
+    <center>  
+        <h1 style="font-family: 'Times New Roman', Times, serif;"><i>ROOMS</i></h1>
+    </center>
+    {% for room in rooms %}
+        <div class="card mb-3">
+            <img src="{{ room.image.url }}" class="card-img-top" alt="Wild Landscape"/>
+            <div class="card-body">
+            <h5 class="card-title">{{room.room_name}}</h5>
+            <p class="card-text">
+                {{room.description}}
+            </p>
+            {% if room.is_available%}
+            <p class="card-text">
+                <small class="text-muted">Room Available</small>
+            </p>
+             <td><a href="{% url 'book_room' room.id %}" class="btn btn-primary">Book Room</a></td>
+            
+            {%else%}
+            <p class="card-text">
+                <small class="text-muted">Not Available</small> <br>
+                {% for reserve in roomrelate%}
+                    {% if room.id == reserve.room.id%}
+                    <small>Room will be Available on {{reserve.end_date.date}}</small>
+                    {%endif%}
+                {%endfor%}
+            </p>
+            {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

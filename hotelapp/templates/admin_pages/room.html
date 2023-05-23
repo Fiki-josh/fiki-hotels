@@ -1,0 +1,114 @@
+{% extends 'admin_pages/base_admin.html' %}
+
+{% block content %}
+<div id="topnavbar">
+    <div class="topnav mb-3">
+        <div class="d-flex px-1"><a href="#news" class="active">all rooms</a>
+        </div>
+        <button class="btn btn-primary" style="float: right;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Room</button>
+    <div class="d-flex align-items-center mb-3 px-md-3 px-2"> <span class="text-uppercase fs13 fw-bolder pe-3">search<span class="ps-1">by</span></span>
+        <form class="example d-flex align-items-center"> <input type="text" placeholder="Type in user name" name="search"> <button type="submit"><i class="fa fa-search"></i></button> </form>
+    </div>
+      <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Room</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" class="form" action="">
+                        {% csrf_token %}
+                        {{form.as_p}}
+
+                        {{ form.image_field }}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive px-2">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">ROOM<span> ID</span></th>
+                    <th scope="col">ROOM NAME</th>
+        
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms%}
+                <tr>
+                    <td><span class="bg-blight">{{room.id}}</span></td>
+                    <td><span class="bg-bdark">{{room.room_name}}</td>
+                    <!-- {% if room.is_available%}
+                    <td><span class="bg-bdark">Available</td>
+                        {%else%}
+                        <td><span class="bg-bdark">Reserved</td>
+                    {%endif%} -->
+                    <td><a href="{% url 'update_room' room.id%}" style="text-decoration: none; padding: 0;"><button class="btn btn-primary">update</button></a></td>
+                    <form method="POST" action="{% url 'delete_room' room.id %}">
+                        {% csrf_token%}
+                        <td><button class="btn btn-danger">delete</button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {{current_datetime}}
+            
+        </table>
+        <div class="d-flex px-1"><a href="#news" class="active">all Reserved rooms</a>
+        </div>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">ROOM<span> ID</span></th>
+                    <th scope="col">ROOM NAME</th>
+                    <th scope="col">ROOM STATUS</th>
+                    <th scope="col">ENTRY DATE</th>
+                    <th scope="col">CHECKOUT DATE</th>
+                    <th scope="col">Extra Service</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% for x in test%}
+                {{x.room.room_name}}
+                {% endfor %} -->
+                {% for room in roomsquery%}
+                <tr>
+                    <td><span class="bg-blight">{{room.room.id}}</span></td>
+                    <td><span class="bg-bdark">{{room.room.room_name}}</td>
+                    {% if room.room.is_available%}
+                    <td><span class="bg-bdark">Available</td>
+                        {%elif current_datetime.date >= room.start_date.date and current_datetime.date <= room.end_date.date %}
+                            <td><span class="bg-bdark">Occupied</td>
+                        {%elif current_datetime.date < room.start_date.date %}
+                        <td><span class="bg-bdark">Reserved</td>
+                    {%endif%}
+                    <td><span class="bg-bdark">{{room.start_date}}</td>
+                    <td><span class="bg-bdark">{{room.end_date}}</td> 
+                    {% for extra in room.extra_services.all%}
+                    <td><span class="bg-bdark">{{extra}}</td>
+                    {%endfor%}
+                    <form method="POST" action="{% url 'delete_reserve' room.id %}">
+                        {% csrf_token%}
+                        <td><button class="btn btn-danger">cancel</button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-between px-3 mt-3">
+        <div class="bg-bdark fs13"> <span>Page</span> <input class="input-10 text-center" type="text" value="1"> <span><span class="px-1">of</span>1</span> </div>
+        <div class="d-flex justify-content-end bg-bdark fs13"> <span class="pe-1">Show</span> <input class="input-10" type="number" value="25"> <span class="ps-2"><span class="pe-2">/</span>Page</span> </div>
+    </div>
+</div>
+{% endblock %}

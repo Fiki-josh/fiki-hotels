@@ -1,0 +1,57 @@
+{% extends 'guest_pages/base_guest.html' %}
+{%load static%}
+
+{% block content %}
+
+    <div class="cont">
+        <img class=" w-100" src="{% static 'home.jpg' %}" data-color="lightblue" alt="First Image" style="opacity: .9;">
+    </div><br>
+    <div class="container" id="reservation">
+        <center>
+            <h1><i>MY RESERVATION</i></h1>
+        </center>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Room Number</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reserve in reservation%}
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel Reservation</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form enctype="multipart/form-data" class="form" action="{% url 'delete_reserve' reserve.id%}">
+                                {% csrf_token%}
+                                <p>Are you sure want to cancel your reservation</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <tr>
+                <th scope="row">{{reserve.room}}</th>
+                <td>{{reserve.start_date}}</td>
+                <td>{{reserve.end_date}}</td>
+                {%if reserve.start_date.date > current_datetime.date%}
+                <td><a href="{% url 'update_reserve' reserve.id %}" style="text-decoration: none; padding: 0;"><button class="btn btn-primary">update</button></a></td>
+                {%endif%}
+                <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">cancel</button></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+            </table>
+    </div>
+{% endblock %}

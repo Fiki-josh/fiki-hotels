@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Admin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+        *{margin: 0;padding: 0;box-sizing: border-box;list-style: none;font-family: 'Montserrat', sans-serif}
+        body{padding: 10px}
+        .topnav{background-color: #ffff;overflow: hidden}
+        .far.fa-user-circle{font-size: 29px;color: #726f6f;padding-top: 10px}
+        .input-10{width: 40px;color: #4c4c96;font-weight: 600}
+        .fas.fa-search{display: flex;flex-direction: column;align-items: center;justify-content: center;background-color: lightsalmon;height: 100%}
+        .topnav a{float: left;display: block;color: #8d8b8b;font-weight: 800;font-size: 14px;text-transform: uppercase;padding: 14px 16px;text-decoration: none;border-bottom: 3px solid transparent}
+        .topnav a:hover{color: black;border-bottom: 3px solid red}
+        .topnav .active{color: black;border-bottom: 3px solid red}
+        form.example input[type=text]{padding: 10px;font-size: 17px;border: 1px solid grey;float: left;width: 90%;height: 36px;background: #fff}
+        form.example input[type=text]:focus{outline: none}
+        form.example button{float: left;width: 10%;height: 36px;padding: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;background: #4c4c96;color: white;font-size: 14px;border: 1px solid grey;border-left: none;cursor: pointer}
+        .navbar-toggler:focus{box-shadow: none;outline: none;border: none}
+        ::placeholder{font-size: 10px}
+        form.example button:hover{background: #0b7dda}
+        form.example::after{content: "";clear: both;display: table}
+        .container .table-responsive{margin: 20px auto;overflow-x: auto}
+        .container .table-responsive::-webkit-scrollbar{height: 5px}
+        .container .table-responsive::-webkit-scrollbar-thumb{border-radius: 5px;background-image: linear-gradient(to right, #5D7ECD, #0C91E6)}
+        .table thead tr th{font-size: 11px;color: #868585;padding: 10px 10px}
+        .table tbody tr td{font-size: 13.5px;padding: 10px 10px}
+        #navbar{width: 20%;background-color: #21214e !important;height: 50px;border: none}
+        .bg-blight{color: #7f7fee;font-weight: 600}.bg-bdark{color: #4c4c96;font-weight: 600}
+        #navbar a{color: white}.fas.fa-bars{color: white}
+        #navbar2{width: 80%}#navbar-items{width: 20%;height: 500px;background-color: #4f4f8a}
+        ul#navbar-items li{color: #b6b5b5;padding: 15px 25px;font-weight: 600;text-transform: uppercase;font-size: 10px;display: flex;align-items: center}
+        ul li .fas{font-size: 16px}ul#navbar-items li:hover{background-color: #21214e;color: white}
+        ul li:hover .fas{color: #f7910c}#topnavbar{width: 80%}.fs13{font-size: 13px}.fs14{font-size: 18px;color: white}
+        .fas.fa-times{color: red}.fas.fa-check{color: greenyellow}.example{width: 50%}
+        @media(max-width:780px){
+            #navbar{width: 20%}
+            #topnavbar{width: 80%}
+            .text-decoration-none.fs14{font-size: 10px}
+            .text-decoration-none .fs13{font-size: 9px}
+        }
+        @media(max-width:430px){
+            #navbar-items, #topnavbar{width: 100%;height: 100%}
+            #navbar-items{padding: 20px;margin-bottom: 30px}
+            .topnav a{font-size: 12px;padding: 12px}
+            #navbar{width: 100%;background-color: blue}
+            .example{width: 100%}.text-decoration-none.fs14{font-size: 14px}
+            .text-decoration-none .fs13{font-size: 13px}
+        }
+        @media(max-width:376px){
+            #navbar-items{padding: 20px;margin-bottom: 30px}
+            .topnav a{font-size: 12px;padding: 7px}
+        }
+         @media(max-width:320px){.topnav a{font-size: 10px;padding: 4px}}
+    </style>
+</head>
+<body>
+    <div class="px-0 bg-light">
+        <div class="d-flex">
+            <div class="d-flex align-items-center " id="navbar">
+                 <button class="navbar-toggler px-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-items" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"> 
+                    <span class="fas fa-bars"></span>
+                 </button> 
+                 <a class="text-decoration-none fs14 px-2" href="#">Fiki<span class="fs13 pe-2">Hotels</span></a> </div>
+            <!-- <div id="navbar2" class="d-flex justify-content-end pe-4"> <span class="far fa-user-circle "></span> </div> -->
+            <div class="dropdown">
+                <button style="margin-right: 40px; background: whitesmoke; color: black; border: none;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img
+                    src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                    class="rounded-circle"
+                    height="25"
+                    alt="Black and White Portrait of a Man"
+                    loading="lazy"
+                    />
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="{%url 'logout'%}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-md-flex">
+            <ul id="navbar-items" class="p-0">
+                <li> <span class="fas fa-th-list"></span> <a href="{% url 'users_list' %}" class="ps-3 name" style="color: white; text-decoration: none;">Users</a> </li>
+                <li> <span class="fas fa-chart-line"></span> <a href="{% url 'room_list' %}" class="ps-3 name" style="color: white; text-decoration: none;">Rooms</a> </li>
+                <li> <span class="fas fa-chart-line"></span> <a href="{% url 'reservation' %}" class="ps-3 name" style="color: white; text-decoration: none;">Reservations </a> </li>
+                <li> <span class="fas fa-chart-line"></span> <a href="{% url 'compose' %}" class="ps-3 name" style="color: white; text-decoration: none;">Message </a> </li>
+                <li> <span class="fas fa-chart-line"></span> <a href="{% url 'inbox' %}" class="ps-3 name" style="color: white; text-decoration: none;">Inbox </a> </li>
+            </ul>
+            {% block content%}
+        
+            {% endblock %}
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</body>
+</html>
