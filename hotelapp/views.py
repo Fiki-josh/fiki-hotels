@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+from django.db import IntegrityError
 
 current_datetime = timezone.now()
 @login_required
@@ -252,21 +253,26 @@ def bookRoom(request):
     selected_room_id = request.session.get('selected_room_id')
     room = get_object_or_404(Room,id=selected_room_id)
     form = GuestReservationForm(initial={'room': room})
+    error =False
     if request.method == 'POST':
         form = GuestReservationForm(request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.username = request.user
-            booking.room = room
-            extra_services = form.cleaned_data['extra_services']
-            booking.save()
-            booking.extra_services.set(extra_services)
-            changeStatus(request)
-            del request.session['selected_room_id']
-            return redirect('rooms')
+        try:
+
+            if form.is_valid():
+                booking = form.save(commit=False)
+                booking.username = request.user
+                booking.room = room
+                extra_services = form.cleaned_data['extra_services']
+                booking.save()
+                booking.extra_services.set(extra_services)
+                changeStatus(request)
+                del request.session['selected_room_id']
+                return redirect('rooms')
+        except IntegrityError:
+            error = True
     else:
         form = GuestReservationForm()
-    context = {"form":form}
+    context = {"form":form,"error":error}
     return render(request, 'guest_pages/book_room.html',context)
 def guestBookRoom(request,id):
     room = get_object_or_404(Room,id=id)

@@ -2,6 +2,9 @@
 
 {% block content %}
     <center>
+        {% if error%}
+        <p>The date picked as already been reserved, please chose another</p>
+        {%endif%}
         <form method="POST" enctype="multipart/form-data" class="form" action="">
             {% csrf_token %}
             {{form.as_p}}

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from datetime import date
 from django.utils import timezone
+from django.db.models import UniqueConstraint
+from django.db.models.functions import Extract
 
 current_datetime = timezone.now()
 # Create your models here.
@@ -35,6 +37,20 @@ class Reservation(models.Model):
     start_date = models.DateTimeField(validators=[MinValueValidator(limit_value=current_datetime)])
     end_date = models.DateTimeField(validators=[MinValueValidator(limit_value=current_datetime)])  
     extra_services = models.ManyToManyField(ExtraService, blank=True)
+
+    start_date_date = models.DateField(editable=False,null=True)
+    end_date_date = models.DateField(editable=False,null=True)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['start_date_date'], name='unique_start_date'),
+            UniqueConstraint(fields=['end_date_date'], name='unique_end_date')
+        ]
+
+    def save(self, *args, **kwargs):
+        self.start_date_date = self.start_date.date()
+        self.end_date_date = self.end_date.date()
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return f'{self.username} -> {self.room}'
